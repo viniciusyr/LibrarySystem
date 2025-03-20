@@ -1,16 +1,12 @@
 import exception.DBException;
-
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 public class DB {
 
-    private static Connection conn = null;
+    public static Connection conn = null;
 
     public static Properties loadProperties(){
         try(FileInputStream fs = new FileInputStream("src/db.properties")){
@@ -29,7 +25,7 @@ public class DB {
                 String url = props.getProperty("dburl");
                 conn = DriverManager.getConnection(url, props);
             } catch (SQLException e) {
-                throw new DBException(e.getMessage());
+                throw new DBException("Error to connect: "+ e.getMessage());
             }
         }
         return conn;
@@ -40,7 +36,27 @@ public class DB {
             try{
                 conn.close();
             } catch (SQLException e) {
-                throw new DBException(e.getMessage());
+                throw new DBException("Error close Connection: " + e.getMessage());
+            }
+        }
+    }
+
+    public static void closeStatement(Statement st){
+        if (st != null){
+            try{
+                st.close();
+            } catch (SQLException e){
+                throw new DBException("Error close Statement: " + e.getMessage());
+            }
+        }
+    }
+
+    public static void closeResultSet(ResultSet rs){
+        if(rs != null){
+            try{
+                rs.close();
+            } catch (SQLException e){
+                throw new DBException("Error close ResultSet: " + e.getMessage());
             }
         }
     }
