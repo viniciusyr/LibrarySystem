@@ -1,3 +1,5 @@
+package database;
+
 import exception.DBException;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -29,36 +31,6 @@ public class DB {
             }
         }
         return conn;
-    }
-
-    public static void closeConnection(Connection conn){
-        if(conn != null){
-            try{
-                conn.close();
-            } catch (SQLException e) {
-                throw new DBException("Error close Connection: " + e.getMessage());
-            }
-        }
-    }
-
-    public static void closeStatement(Statement st){
-        if (st != null){
-            try{
-                st.close();
-            } catch (SQLException e){
-                throw new DBException("Error close Statement: " + e.getMessage());
-            }
-        }
-    }
-
-    public static void closeResultSet(ResultSet rs){
-        if(rs != null){
-            try{
-                rs.close();
-            } catch (SQLException e){
-                throw new DBException("Error close ResultSet: " + e.getMessage());
-            }
-        }
     }
 }
 

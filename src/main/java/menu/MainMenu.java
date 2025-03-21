@@ -4,11 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class MainMenu {
+public class MainMenu extends Menu{
 
-    public static Scanner scanner = new Scanner(System.in);
-
-    public static void runMainMenu() {
+    public void run() {
         Map<Integer, String> mainMenu = new HashMap<>();
         mainMenu.put(1, "Registration");
         mainMenu.put(2, "Library");
@@ -17,14 +15,14 @@ public class MainMenu {
 
         while (true) {
             System.out.println("\n===== MAIN MENU =====");
-            displayMenu(mainMenu);
+            super.displayMenu(mainMenu);
 
             int choice = getUserChoice(mainMenu);
 
             switch (choice) {
-                case 1 -> runRegistrationMenu();
-                case 2 -> runLibraryMenu();
-                case 3 -> runLoansMenu();
+                case 1 -> new RegistrationMenu().run();
+                case 2 -> new LibraryMenu().run();
+                case 3 -> new LoansMenu().run();
                 case 4 -> {
                     System.out.println("Goodbye!");
                     return;
@@ -33,22 +31,4 @@ public class MainMenu {
         }
     }
 
-    private static void displayMenu(Map<Integer, String> mainMenu) {
-        mainMenu.forEach((key, value) -> System.out.println(key + " - " + value));
-        System.out.print("Choose and option: ");
-    }
-
-    private static int getUserChoice(Map<Integer, String> menu){
-        while(true) {
-            try {
-                int choice = Integer.parseInt(scanner.nextLine());
-                if(menu.containsKey(choice)){
-                    return choice;
-                }
-                System.out.println("Invalid option. Please, try again: ");
-            } catch (NumberFormatException e){
-                System.out.println("Invalid input. Enter a Number: ");
-            }
-        }
-    }
 }
