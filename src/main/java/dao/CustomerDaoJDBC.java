@@ -82,7 +82,7 @@ public class CustomerDaoJDBC implements CustomerDao {
 
     @Override
     public void deleteById(int id) {
-        String sql = "ELETE FROM customer WHERE ID = ?";
+        String sql = "DELETE FROM customer WHERE ID = ?";
         try(Connection conn = DB.getConnection();
             PreparedStatement st = conn.prepareStatement(sql)){
             st.setInt(1, id);
