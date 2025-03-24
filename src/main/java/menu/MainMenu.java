@@ -2,13 +2,12 @@ package menu;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class MainMenu extends Menu{
 
     public void run() {
         Map<Integer, String> mainMenu = new HashMap<>();
-        mainMenu.put(1, "Registration");
+        mainMenu.put(1, "Customers");
         mainMenu.put(2, "Library");
         mainMenu.put(3, "Loans");
         mainMenu.put(4, "Exit");
