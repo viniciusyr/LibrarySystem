@@ -9,10 +9,9 @@ import java.util.Scanner;
 
 public class CustomerService {
 
-    private static final Scanner scanner = new Scanner(System.in);
     private final CustomerDaoJDBC customerDao;
 
-    public CustomerService(CustomerDaoJDBC customerDao){
+    public CustomerService(CustomerDaoJDBC customerDao) {
         this.customerDao = customerDao;
     }
 

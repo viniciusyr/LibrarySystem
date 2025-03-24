@@ -8,7 +8,7 @@ public class CustomerFactory {
         return new Customer(name, email);
     }
 
-    public static Customer createWithID(int id, String name, String email){
+    public static Customer createWithID(Integer id, String name, String email){
         return new Customer(id, name, email);
     }
 }

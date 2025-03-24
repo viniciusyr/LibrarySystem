@@ -11,6 +11,8 @@ import database.DB;
 
 public class CustomerDaoJDBC implements CustomerDao {
 
+    public CustomerDaoJDBC() {
+    }
 
     @Override
     public Customer insert(Customer customer){
@@ -27,7 +29,7 @@ public class CustomerDaoJDBC implements CustomerDao {
             if(rowsAffected > 0) {
                 try (ResultSet rs = st.getGeneratedKeys()) {
                     if (rs.next()) {
-                        int id = rs.getInt(1);
+                        Integer id = rs.getInt(1);
                         return CustomerFactory.createWithID(id, customer.getName(), customer.getEmail());
                     }
                 }
@@ -55,8 +57,8 @@ public class CustomerDaoJDBC implements CustomerDao {
 
     @Override
     public Customer findById(int id) {
-        String sql = "SELECT * FROM customer WHERE ID = ?";
         Customer customer = null;
+        String sql = "SELECT * FROM customer WHERE ID = ?";
         try(Connection conn = DB.getConnection();
             PreparedStatement st = conn.prepareStatement(sql)) {
 
@@ -68,7 +70,8 @@ public class CustomerDaoJDBC implements CustomerDao {
                     String name = rs.getString("name");
                     String email = rs.getString("email");
 
-                    customer = new Customer(customerId, name, email);
+                    customer = CustomerFactory.createWithID(customerId, name, email);
+
                 }
             }
         } catch (SQLException e){

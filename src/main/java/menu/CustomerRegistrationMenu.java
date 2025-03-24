@@ -1,21 +1,26 @@
 package menu;
 
 import service.CustomerService;
+import service.ServiceFactory;
+
 
 public class CustomerRegistrationMenu extends Menu {
 
-    private static CustomerService cs;
+    private final CustomerService cs;
+
+    public CustomerRegistrationMenu() {
+        this.cs = ServiceFactory.getCustomerService();
+    }
 
     @Override
     public void run(){
+
         System.out.print("Insert the customer name: ");
         String name = scanner.nextLine();
-        scanner.nextLine();
-        System.out.println("Insert the customer email: ");
+        System.out.print("Insert the customer email: ");
         String email = scanner.nextLine();
-        scanner.nextLine();
 
-       cs.registerCustomer(name, email);
+        cs.registerCustomer(name, email);
     }
 
 }
