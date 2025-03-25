@@ -1,5 +1,7 @@
 package model;
 
+import enums.BookStatus;
+
 import java.util.Objects;
 
 public class Book {
@@ -9,21 +11,24 @@ public class Book {
     private final int year;
     private final String author;
     private final String genre;
+    private BookStatus status;
 
-    public Book(int id, String title, int year, String author, String genre){
+    public Book(int id, String title, int year, String author, String genre, BookStatus status){
         this.id = id;
         this.title = title;
         this.year = year;
         this.author = author;
         this.genre = genre;
+        this.status = status;
     }
 
-    public Book(String title, int year, String author, String genre) {
+    public Book(String title, int year, String author, String genre, BookStatus status) {
         this.id = null;
         this.title = title;
         this.year = year;
         this.author = author;
         this.genre = genre;
+        this.status = status;
     }
 
     public int getId() {
@@ -46,6 +51,14 @@ public class Book {
         return genre;
     }
 
+    public BookStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BookStatus status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Book book)) return false;
@@ -55,5 +68,17 @@ public class Book {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, year, author, genre);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", year=" + year +
+                ", author='" + author + '\'' +
+                ", genre='" + genre + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

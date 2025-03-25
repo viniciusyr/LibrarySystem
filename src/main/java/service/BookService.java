@@ -1,6 +1,7 @@
 package service;
 
 import dao.BookDaoJDBC;
+import enums.BookStatus;
 import factory.BookFactory;
 import model.Book;
 
@@ -12,8 +13,8 @@ public class BookService {
         this.bookDao = bookDao;
     }
 
-    public void registerBook(String title, int year, String author){
-        Book book = BookFactory.create(title, year, author);
+    public void registerBook(String title, int year, String author, String genre, BookStatus status){
+        Book book = BookFactory.create(title, year, author, genre, status);
         bookDao.insert(book);
     }
 

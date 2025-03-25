@@ -1,11 +1,8 @@
 package service;
 
-import dao.CustomerDao;
 import dao.CustomerDaoJDBC;
 import factory.CustomerFactory;
 import model.Customer;
-
-import java.util.Scanner;
 
 public class CustomerService {
 
