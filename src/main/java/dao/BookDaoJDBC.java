@@ -1,6 +1,7 @@
 package dao;
 
 import database.DB;
+import enums.BookStatus;
 import exception.DBException;
 import factory.BookFactory;
 import model.Book;
@@ -12,7 +13,7 @@ import java.util.List;
 public class BookDaoJDBC implements BookDao{
     @Override
     public Book insert(Book book) {
-        String sql = "INSERT INTO book (title, year, author, genre) VALUE (?, ?, ?, ?)";
+        String sql = "INSERT INTO book (title, year, author, genre, status) VALUE (?, ?, ?, ?, ?)";
         try(Connection conn = DB.getConnection();
         PreparedStatement st = conn.prepareStatement(sql,
                 Statement.RETURN_GENERATED_KEYS)){
@@ -20,6 +21,7 @@ public class BookDaoJDBC implements BookDao{
             st.setInt(2, book.getYear());
             st.setString(3, book.getAuthor());
             st.setString(4, book.getGenre());
+            st.setString(5, book.getStatus().toString());
 
             int rowsAffected = st.executeUpdate();
             updateMsg(rowsAffected);
@@ -32,12 +34,13 @@ public class BookDaoJDBC implements BookDao{
                                 book.getTitle(),
                                 book.getYear(),
                                 book.getAuthor(),
-                                book.getGenre());
+                                book.getGenre(),
+                                book.getStatus());
                     }
                 }
             }
         } catch (SQLException e){
-            throw new DBException(e.getMessage());
+            throw new DBException("Error to insert a book: " + e.getMessage());
         }
         return book;
     }
@@ -74,8 +77,9 @@ public class BookDaoJDBC implements BookDao{
                     int year = rs.getInt("year");
                     String author = rs.getString("author");
                     String genre = rs.getString("genre");
+                    BookStatus status = BookStatus.valueOf(rs.getString("status"));
 
-                    book = BookFactory.createWithID(bookId, title, year, author, genre);
+                    book = BookFactory.createWithID(bookId, title, year, author, genre, status);
                 }
             }
         } catch (SQLException e){
@@ -111,8 +115,9 @@ public class BookDaoJDBC implements BookDao{
                 int year = rs.getInt("year");
                 String author = rs.getString("author");
                 String genre = rs.getString("genre");
+                BookStatus status = BookStatus.valueOf(rs.getString("status"));
 
-                Book book = new Book(id, title, year, author, genre);
+                Book book = new Book(id, title, year, author, genre, status);
                 books.add(book);
             }
 

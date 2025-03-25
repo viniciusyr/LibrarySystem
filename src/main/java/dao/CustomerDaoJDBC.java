@@ -30,7 +30,10 @@ public class CustomerDaoJDBC implements CustomerDao {
                 try (ResultSet rs = st.getGeneratedKeys()) {
                     if (rs.next()) {
                         Integer id = rs.getInt(1);
-                        return CustomerFactory.createWithID(id, customer.getName(), customer.getEmail());
+                        return CustomerFactory.createWithID(
+                                id,
+                                customer.getName(),
+                                customer.getEmail());
                     }
                 }
             }

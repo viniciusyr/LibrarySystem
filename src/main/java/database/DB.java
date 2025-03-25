@@ -21,16 +21,13 @@ public class DB {
     }
 
     public static Connection getConnection(){
-        if(conn == null){
-            try{
-                Properties props = DB.loadProperties();
-                String url = props.getProperty("dburl");
-                conn = DriverManager.getConnection(url, props);
-            } catch (SQLException e) {
-                throw new DBException("Error to connect: "+ e.getMessage());
-            }
+        try{
+            Properties props = DB.loadProperties();
+            String url = props.getProperty("dburl");
+            return DriverManager.getConnection(url, props);
+        } catch (SQLException e) {
+            throw new DBException("Error to connect: "+ e.getMessage());
         }
-        return conn;
     }
 }
 
