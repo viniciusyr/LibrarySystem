@@ -8,6 +8,7 @@ public class EditMenu extends Menu{
     public void run() {
         Map<Integer, String> editMenu = new HashMap<>();
         editMenu.put(1, "Edit customer email");
+        editMenu.put(2, "Return");
 
         while(true){
             System.out.println("\n===== EDIT MENU =====");
@@ -15,8 +16,7 @@ public class EditMenu extends Menu{
             int choice = getUserChoice(editMenu);
             switch (choice){
                 case 1 -> new CustomerEditMenu().run();
-                case 2 -> new BookEditMenu().run();
-                case 3 -> {return;}
+                case 2 -> {return;}
             }
 
         }
