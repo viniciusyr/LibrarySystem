@@ -18,4 +18,6 @@ public class BookService {
         bookDao.insert(book);
     }
 
+    public void editBook(){};
+
 }

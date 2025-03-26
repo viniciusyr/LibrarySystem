@@ -44,11 +44,12 @@ public class CustomerDaoJDBC implements CustomerDao {
     }
 
     @Override
-    public void update(Customer customer, String newEmail) {
+    public void update(int customerId, String newEmail) {
         String sql = "UPDATE customer SET email = ? WHERE id = ?";
         try(Connection conn = DB.getConnection();
             PreparedStatement st = conn.prepareStatement(sql)){
             st.setString(1, newEmail);
+            st.setInt(2, customerId);
 
             int rowsAffected = st.executeUpdate();
             updateMsg(rowsAffected);
@@ -68,8 +69,8 @@ public class CustomerDaoJDBC implements CustomerDao {
             st.setInt(1, id);
 
             try(ResultSet rs = st.executeQuery()) {
-                while (rs.next()) {
-                    int customerId = rs.getInt(1);
+                if(rs.next()) {
+                    int customerId = rs.getInt("id");
                     String name = rs.getString("name");
                     String email = rs.getString("email");
 
@@ -89,7 +90,7 @@ public class CustomerDaoJDBC implements CustomerDao {
         try(Connection conn = DB.getConnection();
             PreparedStatement st = conn.prepareStatement(sql)){
             st.setInt(1, id);
-            st.executeQuery();
+            st.executeUpdate();
 
         } catch (SQLException e){
             throw new DBException("Error to delete by ID: " + e.getMessage());
@@ -105,9 +106,9 @@ public class CustomerDaoJDBC implements CustomerDao {
             ResultSet rs = st.executeQuery()) {
 
             while(rs.next()){
-                int id = rs.getInt(1);
-                String name = rs.getString(2);
-                String email = rs.getString(3);
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
                 Customer newCustomer = new Customer(id, name, email);
                 customers.add(newCustomer);
             }

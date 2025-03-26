@@ -17,4 +17,10 @@ public class CustomerService {
         customerDao.insert(customer);
     }
 
+    public void editCustomer(int customerId, String newEmail){
+       customerDao.update(customerId, newEmail);
+    }
+
 }
+
+
