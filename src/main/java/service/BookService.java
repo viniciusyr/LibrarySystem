@@ -5,6 +5,9 @@ import enums.BookStatus;
 import factory.BookFactory;
 import model.Book;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BookService {
 
     private final BookDaoJDBC bookDao;
@@ -18,6 +21,35 @@ public class BookService {
         bookDao.insert(book);
     }
 
-    public void editBook(){};
+    public void editBook(int bookId, String newTitle, Integer newYear, String newAuthor, String newGenre){
+        Book book = bookDao.findById(bookId);
+        if(book == null){
+            throw new IllegalArgumentException("Book not found!");
+        }
+
+        Map<String, Object> updatedFields = new HashMap<>();
+
+        if(newTitle != null && !newTitle.isBlank()){
+           updatedFields.put("title", newTitle);
+        }
+
+        if(newYear != null){
+            updatedFields.put("year", newYear);
+        }
+
+        if(newAuthor != null && !newAuthor.isBlank()){
+            updatedFields.put("author", newAuthor);
+        }
+
+        if(newGenre != null && !newGenre.isBlank()){
+            updatedFields.put("genre", newGenre);
+        }
+
+        if (updatedFields.isEmpty()){
+            System.out.println("No updates were made!");
+        }
+
+        bookDao.update(bookId, updatedFields);
+    };
 
 }
