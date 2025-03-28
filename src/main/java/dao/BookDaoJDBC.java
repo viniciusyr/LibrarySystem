@@ -8,7 +8,9 @@ import model.Book;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BookDaoJDBC implements BookDao{
     @Override
@@ -46,19 +48,33 @@ public class BookDaoJDBC implements BookDao{
     }
 
     @Override
-    public void update(Book book) {
-        String sql = " ";
-        try(Connection conn = DB.getConnection();
-        PreparedStatement st = conn.prepareStatement(sql)){
-            st.setString(1, "");
+    public void update(int bookId, Map<String, Object> fields) {
+        if(fields.isEmpty()){
+            return;
+        }
+        StringBuilder sql = new StringBuilder("UPDATE book SET");
+        List<Object> values = new ArrayList<>();
 
-            // THIS NEEDS TO BE DONE AFTER DEFINED.
+        for(Map.Entry<String, Object> entry : fields.entrySet()){
+            sql.append(entry.getKey()).append(" = ?, ");
+            values.add(entry.getValue());
+        }
+
+        sql.setLength(sql.length() - 2);
+        sql.append("WHERE id = ?").append(bookId);
+
+        try(Connection conn = DB.getConnection();
+        PreparedStatement st = conn.prepareStatement(sql.toString())){
+
+            for(int i = 0; i < values.size(); i++) {
+                st.setObject(i + 1, values.get(i));
+            }
 
             int rowsAffected = st.executeUpdate();
             updateMsg(rowsAffected);
 
         } catch(SQLException e){
-            throw new DBException(e.getMessage());
+            throw new DBException("Error updating book: " + e.getMessage());
         }
     }
 
