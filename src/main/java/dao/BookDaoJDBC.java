@@ -8,7 +8,6 @@ import model.Book;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -77,7 +76,7 @@ public class BookDaoJDBC implements BookDao{
             updateMsg(rowsAffected);
 
         } catch(SQLException e){
-            System.out.println("Generated SQL: " + sql.toString());
+            System.out.println("Generated SQL: " + sql);
             System.out.println("Values: " + values);
             throw new DBException("Error updating book: " + e.getMessage());
         }
