@@ -29,7 +29,7 @@ public class BookService {
 
         Map<String, Object> updatedFields = new HashMap<>();
 
-        if(newTitle != null && !newTitle.isBlank()){
+        if(newTitle != null){
            updatedFields.put("title", newTitle);
         }
 
@@ -37,11 +37,11 @@ public class BookService {
             updatedFields.put("year", newYear);
         }
 
-        if(newAuthor != null && !newAuthor.isBlank()){
+        if(newAuthor != null){
             updatedFields.put("author", newAuthor);
         }
 
-        if(newGenre != null && !newGenre.isBlank()){
+        if(newGenre != null){
             updatedFields.put("genre", newGenre);
         }
 
@@ -51,5 +51,7 @@ public class BookService {
 
         bookDao.update(bookId, updatedFields);
     };
+
+
 
 }

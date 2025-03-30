@@ -17,7 +17,7 @@ public class BookRegistrationMenu extends Menu{
     public void run() {
         System.out.print("Insert the book title: ");
         String title = scanner.nextLine();
-        System.out.print("Insert the book year: ");
+        System.out.print("Insert the year of publication of the book: ");
         int year = scanner.nextInt();
         scanner.nextLine();
         System.out.print("Insert the book author: ");

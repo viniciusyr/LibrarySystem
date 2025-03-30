@@ -52,16 +52,19 @@ public class BookDaoJDBC implements BookDao{
         if(fields.isEmpty()){
             return;
         }
-        StringBuilder sql = new StringBuilder("UPDATE book SET");
+        StringBuilder sql = new StringBuilder("UPDATE book SET ");
         List<Object> values = new ArrayList<>();
 
         for(Map.Entry<String, Object> entry : fields.entrySet()){
-            sql.append(entry.getKey()).append(" = ?, ");
-            values.add(entry.getValue());
+            if(entry.getValue() != null){
+                sql.append(entry.getKey()).append(" = ?, ");
+                values.add(entry.getValue());
+            }
         }
 
         sql.setLength(sql.length() - 2);
-        sql.append("WHERE id = ?").append(bookId);
+        sql.append("WHERE id = ?");
+        values.add(bookId);
 
         try(Connection conn = DB.getConnection();
         PreparedStatement st = conn.prepareStatement(sql.toString())){
@@ -74,6 +77,8 @@ public class BookDaoJDBC implements BookDao{
             updateMsg(rowsAffected);
 
         } catch(SQLException e){
+            System.out.println("Generated SQL: " + sql.toString());
+            System.out.println("Values: " + values);
             throw new DBException("Error updating book: " + e.getMessage());
         }
     }
