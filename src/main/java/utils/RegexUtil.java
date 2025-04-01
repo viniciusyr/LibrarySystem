@@ -14,7 +14,7 @@ public class RegexUtil {
     private final Pattern GENRE_REGEX = Pattern.compile("^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)*$");
     private final Pattern CPF_REGEX = Pattern.compile("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$|^\\d{11}$");
 
-    private RegexUtil() {};
+    private RegexUtil() {}
 
     public static RegexUtil getInstance(){
         return INSTANCE;

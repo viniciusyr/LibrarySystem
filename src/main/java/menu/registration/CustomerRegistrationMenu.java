@@ -1,5 +1,6 @@
-package menu;
+package menu.registration;
 
+import menu.Menu;
 import service.CustomerService;
 import service.ServiceFactory;
 

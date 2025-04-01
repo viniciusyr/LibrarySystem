@@ -1,11 +1,11 @@
-package menu;
+package menu.registration;
 
 import enums.BookStatus;
-import model.Book;
+import menu.Menu;
 import service.BookService;
 import service.ServiceFactory;
 
-public class BookRegistrationMenu extends Menu{
+public class BookRegistrationMenu extends Menu {
 
     private final BookService bs;
 

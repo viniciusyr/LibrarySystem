@@ -1,9 +1,13 @@
-package menu;
+package menu.registration;
+
+import menu.Menu;
+import menu.edit.BookEditMenu;
+import menu.edit.EditMenu;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegistrationMenu extends Menu{
+public class RegistrationMenu extends Menu {
     @Override
     public void run(){
         Map<Integer, String> registrationMenu = new HashMap<>();

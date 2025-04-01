@@ -1,9 +1,11 @@
-package menu;
+package menu.edit;
+
+import menu.Menu;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditMenu extends Menu{
+public class EditMenu extends Menu {
     @Override
     public void run() {
         Map<Integer, String> editMenu = new HashMap<>();

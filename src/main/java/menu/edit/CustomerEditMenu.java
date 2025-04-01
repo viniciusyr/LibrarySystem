@@ -1,35 +1,36 @@
-package menu;
+package menu.edit;
 
-import service.BookService;
+import menu.Menu;
+import service.CustomerService;
 import service.ServiceFactory;
-import validation.BookValidation;
+import validation.CustomerValidation;
 
-public class BookEditMenu extends Menu{
+public class CustomerEditMenu extends Menu {
 
-    private final BookService bs;
-    private static final BookValidation validation = BookValidation.getInstance;
+    private final CustomerService cs;
+    private static final CustomerValidation validation = CustomerValidation.getInstance;
+    private static final String nameRegex = "^[A-Za-zÀ-ÖØ-öø-ÿ' -]{2,100}$";
+    private static final String emailRegex = "^[\\w.-]+@[a-zA-Z\\d.-]+\\.[a-zA-Z]{2,}$";
 
-    public BookEditMenu() {
-        this.bs = ServiceFactory.getBookService();
+    public CustomerEditMenu(){
+        this.cs = ServiceFactory.getCustomerService();
     }
-
     @Override
     public void run() {
 
-        System.out.println("\n===== EDIT BOOK =====");
-        System.out.print("In order to edit a book information, it's necessary to enter a valid book ID");
-        int bookId = readId();
-        String newTitle = readStringInput("Enter the new title of the book: ");
-        Integer newYear = readIntegerInput("Enter the new year of publication of the book : ");
-        String newAuthor = readStringInput("Enter the new author of the book: ");
-        String newGenre = readStringInput("Enter the new genre of the book: ");
+        System.out.println("\n===== EDIT CUSTOMER ====");
+        System.out.print("In order to edit a customer information, it's necessary to enter his ID");
+        int id = readId();
 
-        bs.editBook(bookId, newTitle, newYear, newAuthor, newGenre);
+        String newName = readStringInput("Enter the new customer name: ", nameRegex);
+        String newEmail = readStringInput("Enter the new customer email: ", emailRegex);
+
+        cs.editCustomer(id, newName, newEmail);
     }
 
     private Integer readId() {
         while (true) {
-            System.out.print("\nInsert the book ID: ");
+            System.out.print("\nEnter the customer ID: ");
             String input = scanner.nextLine().trim();
 
             if (input.isBlank()) {
@@ -61,13 +62,17 @@ public class BookEditMenu extends Menu{
         }
     }
 
-    private String readStringInput(String message){
+    private String readStringInput(String message, String regex){
         while(true){
             System.out.print(message);
             String input = scanner.nextLine().trim();
 
             if(input.isBlank()){
                 return null;
+            }
+
+            if(input.matches(regex)){
+                return input;
             }
 
             System.out.println("Invalid input! Please try again.");
