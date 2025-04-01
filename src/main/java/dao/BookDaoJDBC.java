@@ -103,7 +103,7 @@ public class BookDaoJDBC implements BookDao{
                 }
             }
         } catch (SQLException e){
-            throw new DBException(e.getMessage());
+            throw new DBException("Error to find ID: " + e.getMessage());
         }
         return book;
     }
