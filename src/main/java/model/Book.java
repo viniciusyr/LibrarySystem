@@ -2,6 +2,7 @@ package model;
 
 import enums.BookStatus;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Book {
@@ -9,11 +10,11 @@ public class Book {
     private final Integer id;
     private final String title;
     private final int year;
-    private final String author;
-    private final String genre;
+    private final List<Author> author;
+    private final List<Genre> genre;
     private BookStatus status;
 
-    public Book(int id, String title, int year, String author, String genre, BookStatus status){
+    public Book(int id, String title, int year, List<Author> author, List<Genre> genre, BookStatus status){
         this.id = id;
         this.title = title;
         this.year = year;
@@ -22,7 +23,7 @@ public class Book {
         this.status = status;
     }
 
-    public Book(String title, int year, String author, String genre, BookStatus status) {
+    public Book(String title, int year, List<Author> author, List<Genre> genre, BookStatus status) {
         this.id = null;
         this.title = title;
         this.year = year;
@@ -43,11 +44,11 @@ public class Book {
         return year;
     }
 
-    public String getAuthor() {
+    public List<Author> getAuthor() {
         return author;
     }
 
-    public String getGenre() {
+    public List<Genre> getGenre() {
         return genre;
     }
 

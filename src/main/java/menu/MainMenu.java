@@ -1,5 +1,7 @@
 package menu;
 
+import menu.registration.RegistrationMenu;
+
 import java.util.HashMap;
 import java.util.Map;
 
