@@ -7,6 +7,8 @@ import model.Customer;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import database.DB;
 
 public class CustomerDaoJDBC implements CustomerDao {
@@ -44,17 +46,34 @@ public class CustomerDaoJDBC implements CustomerDao {
     }
 
     @Override
-    public void update(int customerId, String newEmail) {
-        String sql = "UPDATE customer SET email = ? WHERE id = ?";
+    public void update(int customerId, Map<String, Object> fields) {
+        StringBuilder sql = new StringBuilder("UPDATE customer SET ");
+        List<Object> values = new ArrayList<>();
+
+        for(Map.Entry<String, Object> entry : fields.entrySet()){
+            if(entry.getValue() != null){
+                sql.append(entry.getKey()).append(" = ?, ");
+                values.add(entry.getValue());
+            }
+        }
+
+        sql.setLength(sql.length() - 2);
+        sql.append("WHERE id = ?");
+        values.add(customerId);
+
         try(Connection conn = DB.getConnection();
-            PreparedStatement st = conn.prepareStatement(sql)){
-            st.setString(1, newEmail);
-            st.setInt(2, customerId);
+            PreparedStatement st = conn.prepareStatement(String.valueOf(sql))){
+
+            for (int i = 0; i < values.size(); i++) {
+                st.setObject(i + 1, values.get(i));
+            }
 
             int rowsAffected = st.executeUpdate();
             updateMsg(rowsAffected);
 
         } catch (SQLException e){
+            System.out.println("Generated SQL: " + sql);
+            System.out.println("Values: " + values);
             throw new DBException("Update model.Customer error: " + e.getMessage());
         }
     }
@@ -69,7 +88,7 @@ public class CustomerDaoJDBC implements CustomerDao {
             st.setInt(1, id);
 
             try(ResultSet rs = st.executeQuery()) {
-                if(rs.next()) {
+                while(rs.next()) {
                     int customerId = rs.getInt("id");
                     String name = rs.getString("name");
                     String email = rs.getString("email");

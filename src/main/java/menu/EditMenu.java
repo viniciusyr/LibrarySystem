@@ -7,7 +7,7 @@ public class EditMenu extends Menu{
     @Override
     public void run() {
         Map<Integer, String> editMenu = new HashMap<>();
-        editMenu.put(1, "Edit customer email");
+        editMenu.put(1, "Edit customer");
         editMenu.put(2, "Return");
 
         while(true){

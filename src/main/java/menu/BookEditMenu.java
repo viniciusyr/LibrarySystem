@@ -2,14 +2,12 @@ package menu;
 
 import service.BookService;
 import service.ServiceFactory;
-
-import java.util.InputMismatchException;
+import validation.BookValidation;
 
 public class BookEditMenu extends Menu{
 
     private final BookService bs;
-    private static final String TITLE_REGEX = "^[A-Za-zÀ-ÖØ-öø-ÿ' -]{2,100}$";
-    private static final String NAME_REGEX = "^[A-Za-zÀ-ÖØ-öø-ÿ' -]{2,100}$";
+    private static final BookValidation validation = BookValidation.getInstance;
 
     public BookEditMenu() {
         this.bs = ServiceFactory.getBookService();
@@ -21,10 +19,10 @@ public class BookEditMenu extends Menu{
         System.out.println("\n===== EDIT BOOK =====");
         System.out.print("In order to edit a book information, it's necessary to enter a valid book ID");
         int bookId = readId();
-        String newTitle = readStringInput("Enter the new title of the book: ", TITLE_REGEX);
+        String newTitle = readStringInput("Enter the new title of the book: ");
         Integer newYear = readIntegerInput("Enter the new year of publication of the book : ");
-        String newAuthor = readStringInput("Enter the new author of the book: ", NAME_REGEX);
-        String newGenre = readStringInput("Enter the new genre of the book: ", TITLE_REGEX);
+        String newAuthor = readStringInput("Enter the new author of the book: ");
+        String newGenre = readStringInput("Enter the new genre of the book: ");
 
         bs.editBook(bookId, newTitle, newYear, newAuthor, newGenre);
     }
@@ -63,17 +61,13 @@ public class BookEditMenu extends Menu{
         }
     }
 
-    private String readStringInput(String message, String regex){
+    private String readStringInput(String message){
         while(true){
             System.out.print(message);
             String input = scanner.nextLine().trim();
 
             if(input.isBlank()){
                 return null;
-            }
-
-            if(input.matches(regex)){
-                return input;
             }
 
             System.out.println("Invalid input! Please try again.");

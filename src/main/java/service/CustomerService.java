@@ -4,6 +4,9 @@ import dao.CustomerDaoJDBC;
 import factory.CustomerFactory;
 import model.Customer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CustomerService {
 
     private final CustomerDaoJDBC customerDao;
@@ -17,8 +20,27 @@ public class CustomerService {
         customerDao.insert(customer);
     }
 
-    public void editCustomer(int customerId, String newEmail){
-       customerDao.update(customerId, newEmail);
+    public void editCustomer(int customerId, String newName, String newEmail){
+        Customer customer = customerDao.findById(customerId);
+        if(customer == null){
+            throw new IllegalArgumentException("Customer not found!");
+        }
+
+        Map<String, Object> updatedFields = new HashMap<>();
+
+        if(newName != null){
+            updatedFields.put("name", newName);
+        }
+
+        if(newEmail != null){
+            updatedFields.put("email", newEmail);
+        }
+
+        if(updatedFields.isEmpty()){
+            System.out.println("No updates were made!");
+        }
+
+       customerDao.update(customerId, updatedFields);
     }
 
 }
